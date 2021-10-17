@@ -69,4 +69,5 @@ if __name__ == "__main__":
     if "remove" in function:
         pass
     if "edit_config" in function:
+        hk = CustomHotkey()
         hk.edit_config()
