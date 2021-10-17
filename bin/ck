@@ -41,9 +41,7 @@ if __name__ == "__main__":
 
     if args.debug:
         pass
-
-    if args.build:
-        pass
+    
     if args.edit:
         hk.edit_config()
         
