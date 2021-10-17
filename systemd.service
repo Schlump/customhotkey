@@ -1,0 +1,15 @@
+
+[Unit]
+Description=CustomHotkey service
+[Service]
+Type=simple
+Environment="DISPLAY=:0"
+Environment="XAUTHORITY=/home/{user}/.Xauthority"
+ExecStart=TODO
+Restart=on-failure
+RestartSec=5s
+StartLimitBurst=5
+[Install]
+WantedBy=multi-user.target
+WantedBy=xsession.target
+
