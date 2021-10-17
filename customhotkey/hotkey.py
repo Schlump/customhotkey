@@ -215,6 +215,8 @@ class CustomHotkey:
             self.root = False
         if os.getuid() == 0:
             self.root = True
+
+            
 if __name__ == "__main__":
     app = CustomHotkey()
     while True:
