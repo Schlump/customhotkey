@@ -95,7 +95,7 @@ class CustomHotkey:
                 stream=sys.stdout,
                 format="%(asctime)s : %(message)s",
             )
-        self.logger = logging.getLogger()
+        self.logger = logging.getLogger(__name__)
         self.logger.setLevel('DEBUG')
         self.init()
         self.input = pathlib.Path(f'/dev/input/by-id/{self.input}').resolve()
@@ -204,7 +204,6 @@ class CustomHotkey:
 
     def _check_root(self):
         user = os.getenv("SUDO_USER")
-        user = 'schlupp'
         self.logger.debug(f'Sudo user: {user}')
         self.root = True
         if user:
