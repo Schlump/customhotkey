@@ -216,11 +216,3 @@ class CustomHotkey:
             self.root = True
 
 
-if __name__ == "__main__":
-    app = CustomHotkey()
-    while True:
-        try:
-            app.enter_loop()
-        except OSError:
-            time.sleep(15)
-            pass

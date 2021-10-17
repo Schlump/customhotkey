@@ -1,12 +1,8 @@
-#!/home/schlupp/miniconda3/bin/python
-import sys
+#!/usr/bin/env python3
 import argparse
-import os
-import pathlib
-import subprocess
-from customhotkey.hotkey import CustomHotkey 
-from customhotkey.hotkey import Fzf 
-
+from customhotkey.hotkey import CustomHotkey
+from customhotkey.hotkey import Fzf
+import time
 
 
 if __name__ == "__main__":
@@ -31,7 +27,12 @@ if __name__ == "__main__":
     parser.add_argument(
         "--edit",
         action="store_true",
-        help="Edit pf config",
+        help="Edit ck config",
+    )
+    parser.add_argument(
+        "--run",
+        action="store_true",
+        help="Run custom hotkey",
     )
 
     args = parser.parse_args()
@@ -41,7 +42,17 @@ if __name__ == "__main__":
 
     if args.debug:
         pass
-    
+
+    if args.run:
+        app = CustomHotkey()
+        while True:
+            try:
+                app.enter_loop()
+            except OSError:
+                time.sleep(15)
+                pass
+
+
     if args.edit:
         hk.edit_config()
         
