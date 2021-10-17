@@ -1,0 +1,62 @@
+#!/home/schlupp/miniconda3/bin/python
+import sys
+import argparse
+import os
+import pathlib
+import subprocess
+import customhotkey as ck
+
+
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(
+        description="Customhotkey.."
+    )
+    parser.add_argument("--debug", action="store_true", help="Turn on Debug Mode")
+    parser.add_argument(
+        "--init",
+        action="store_true",
+        help="Initialize Customhotkey with dummy config file",
+        default=None,
+    )
+    parser.add_argument(
+        "--remove",
+        action="store_true",
+        help="Remove Key from config file",
+        default=None,
+    )
+
+    parser.add_argument(
+        "--edit",
+        action="store_true",
+        help="Edit pf config",
+    )
+
+    args = parser.parse_args()
+
+    fzf = ck.Fzf()
+    hk = ck.CustomHotkey()
+
+    if args.debug:
+        pass
+
+    if args.build:
+        pass
+    if args.edit:
+        hk.edit_config()
+        
+    function = fzf.prompt(
+        [
+            "build",
+            "remove",
+            "edit_config"
+        ],
+        "--cycle --reverse --header=Choose function to use",
+    )
+    if "build" in function:
+        pass
+    if "remove" in function:
+        pass
+    if "edit_config" in function:
+        hk.edit_config()
