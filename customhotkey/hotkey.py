@@ -88,7 +88,6 @@ class Fzf:
                 self.logger.error(str(e.output))
 
 
-
 class CustomHotkey:
 
     def __init__(self):
@@ -216,11 +215,11 @@ class CustomHotkey:
             self.root = False
         if os.getuid() == 0:
             self.root = True
-
-app = CustomHotkey()
-while True:
-    try:
-        app.enter_loop()
-    except OSError:
-        time.sleep(15)
-        pass
+if __name__ == "__main__":
+    app = CustomHotkey()
+    while True:
+        try:
+            app.enter_loop()
+        except OSError:
+            time.sleep(15)
+            pass
