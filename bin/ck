@@ -38,7 +38,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     fzf = Fzf()
-    hk = CustomHotkey()
+   
 
     if args.debug:
         pass
@@ -53,6 +53,7 @@ if __name__ == "__main__":
                 pass
 
     if args.edit:
+        hk = CustomHotkey()
         hk.edit_config()
         
     function = fzf.prompt(

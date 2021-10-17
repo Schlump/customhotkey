@@ -213,5 +213,3 @@ class CustomHotkey:
             self.root = False
         if os.getuid() == 0:
             self.root = True
-
-
