@@ -131,7 +131,7 @@ class CustomHotkey:
             if editor:
                 editor = "/usr/bin/editor"
         if editor:
-            subprocess.call(f"{editor} /home/schlupp/.config/customhotkey/config.yml", shell=True)
+            subprocess.call(f"{editor} {self.configdir}/config.yml", shell=True)
 
         if not editor:
             print("No editor found")
@@ -200,7 +200,6 @@ class CustomHotkey:
                         pass
                     if cmd:
                         self.logger.debug(f'Executing {cmd}')
-                        #subprocess.call(cmd, shell=True)
                         subprocess.Popen(["/bin/bash", "-i", "-c", cmd])
 
     def _check_root(self):
@@ -216,7 +215,7 @@ class CustomHotkey:
         if os.getuid() == 0:
             self.root = True
 
-            
+
 if __name__ == "__main__":
     app = CustomHotkey()
     while True:
