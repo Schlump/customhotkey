@@ -102,24 +102,25 @@ class CustomHotkey:
         self.device = f'{self.input}'
 
     def init(self):
-        self._check_root()
-        if self.root:
-            for path in pathlib.Path('/home').iterdir():
-                self.user = path.stem
-                self.configdir = pathlib.Path(f'/home/{self.user}/.config/customhotkey')
-                self.logger.debug(f'Configdir -> {self.configdir}')
-                if pathlib.Path(self.configdir).exists():
-                    #self.user_data = pwd.getpwnam(self.user)
-                    self.read_config()
-                    #self.source_env()
-                    break
-
-            else:
-                self.logger.debug('No config for any user found...')
+        # self._check_root()
+        # if self.root:
+        for path in pathlib.Path('/home').iterdir():
+            self.user = path.stem
+            self.configdir = pathlib.Path(f'/home/{self.user}/.config/customhotkey')
+            self.logger.debug(f'Configdir -> {self.configdir}')
+            if pathlib.Path(self.configdir).exists():
+                #self.user_data = pwd.getpwnam(self.user)
+                self.read_config()
+                #self.source_env()
+                break
 
         else:
-            self.logger.info('Script needs to run with superuser priviliges')
-            sys.exit(1)
+            self.logger.debug('No config for any user found...')
+            sys.exit(0)
+
+        # else:
+        #     self.logger.info('Script needs to run with superuser priviliges')
+        #     sys.exit(1)
     
     def edit_config(self):
         """[Use systems default editor to open config file]"""
