@@ -4,8 +4,8 @@ import argparse
 import os
 import pathlib
 import subprocess
-from customhotkey.hotkey import CustomHotkey as hk
-from customhotkey.hotkey import Fzf as fzf
+from customhotkey.hotkey import CustomHotkey 
+from customhotkey.hotkey import Fzf 
 
 
 
@@ -36,8 +36,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    fzf = fzf.Fzf()
-    hk = hk.CustomHotkey()
+    fzf = Fzf()
+    hk = CustomHotkey()
 
     if args.debug:
         pass
