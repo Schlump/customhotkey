@@ -131,7 +131,7 @@ class CustomHotkey:
             if editor:
                 editor = "/usr/bin/editor"
         if editor:
-            subprocess.call(f"{editor} {self.configdir}/config.yml", shell=True)
+            subprocess.call(f"{editor} {self.configdir}/config.yaml", shell=True)
 
         if not editor:
             print("No editor found")
