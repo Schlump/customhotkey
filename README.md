@@ -7,5 +7,5 @@
 
 Stable branch:
 ``` bash
-pip install git+ssh://git@github.com/schlump/customhotkey.git@master --force-reinstall
+pip install git+ssh://git@github.com/schlump/customhotkey.git --force-reinstall
 ```
