@@ -1,4 +1,3 @@
-from customhotkey import CustomHotkey
 from customhotkey import Fzf
 
 
