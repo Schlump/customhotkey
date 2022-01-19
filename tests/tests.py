@@ -1,6 +1,5 @@
 import sys
-sys.path.append('../')
-from customhotkey.hotkey import Fzf
+from customhotkey import Fzf
 
 
 def test_fzf():
