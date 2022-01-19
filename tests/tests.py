@@ -1,8 +1,8 @@
 import sys
-from customhotkey import hotkey as hk
+from customhotkey.hotkey import Fzf
 
 
 def test_fzf():
 
-    fzf = hk.Fzf()
+    fzf = Fzf()
     assert hasattr(fzf, '_fzf_version')
