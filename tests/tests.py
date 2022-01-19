@@ -1,5 +1,5 @@
 import sys
-from customhotkey import Fzf
+from customhotkey.hotkey import Fzf
 
 
 def test_fzf():
