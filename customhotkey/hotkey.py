@@ -1,15 +1,11 @@
 #!/usr/bin/python3
 from evdev import InputDevice, categorize, ecodes
-import argparse
 import subprocess
 import logging
 import sys
 import os
-import pwd
 import pathlib
 import yaml
-import time
-import shlex
 
 
 def exit(f):
@@ -102,26 +98,20 @@ class CustomHotkey:
         self.device = f'{self.input}'
 
     def init(self):
-        # self._check_root()
-        # if self.root:
+
         for path in pathlib.Path('/home').iterdir():
             self.user = path.stem
             self.configdir = pathlib.Path(f'/home/{self.user}/.config/customhotkey')
             self.logger.debug(f'Configdir -> {self.configdir}')
             if pathlib.Path(self.configdir).exists():
-                #self.user_data = pwd.getpwnam(self.user)
                 self.read_config()
-                #self.source_env()
                 break
 
         else:
             self.logger.debug('No config for any user found...')
             sys.exit(0)
 
-        # else:
-        #     self.logger.info('Script needs to run with superuser priviliges')
-        #     sys.exit(1)
-    
+
     def edit_config(self):
         """[Use systems default editor to open config file]"""
         editor = os.getenv("VISUAL")
@@ -141,14 +131,6 @@ class CustomHotkey:
         yaml.dump(config, f'{self.configdir}/config.yaml',
                           default_flow_style=False)
 
-    # def source_env(self):
-    #     command = shlex.split(f'sudo -Hiu {self.user} env')
-        
-    #     proc = subprocess.Popen(command, stdout=subprocess.PIPE)
-    #     for line in proc.stdout:
-    #         foo = line.decode('utf-8').replace('\n', '').split('=')
-    #         os.environ[foo[0]] = foo[1]
-
 
     def read_config(self):
         with open(str(self.configdir) + '/config.yaml', 'r') as stream:
@@ -160,8 +142,7 @@ class CustomHotkey:
             except yaml.YAMLError as e:
                 self.logger.info(e)
 
-    # def generate_config(self):
-    #     pass
+
 
     def add_command(self):
         print('Currently added commands:')
@@ -173,9 +154,8 @@ class CustomHotkey:
         print(key)
 
     def detect_device(self):
-        path = '/dev/input/by-id/usb-BlackC_Sayobot.cn_Sayobot_8K_00D158A069D7-event-kbd'
         try:
-            os.stat(path)
+            os.stat(self.device)
         except OSError:
             return False
         return True
