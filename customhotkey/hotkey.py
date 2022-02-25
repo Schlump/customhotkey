@@ -88,8 +88,8 @@ class CustomHotkey:
 
     def __init__(self):
         logging.basicConfig(
-                stream=sys.stdout,
-                format="%(asctime)s : %(message)s",
+            stream=sys.stdout,
+            format="%(asctime)s : %(message)s",
             )
         self.logger = logging.getLogger('CustomHotkey')
         self.logger.setLevel('DEBUG')

@@ -54,7 +54,7 @@ if __name__ == "__main__":
     if args.edit:
         hk = CustomHotkey()
         hk.edit_config()
-        
+
     function = fzf.prompt(
         [
             "build",
