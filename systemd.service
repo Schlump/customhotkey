@@ -5,7 +5,7 @@ Description=CustomHotkey service
 Type=simple
 Environment="DISPLAY=:0"
 Environment="XAUTHORITY=/home/{user}/.Xauthority"
-ExecStart=TODO
+ExecStart={path/to/bin} --run
 Restart=on-failure
 RestartSec=5s
 StartLimitBurst=5

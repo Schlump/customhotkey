@@ -43,11 +43,10 @@ class Fzf:
             ["fzf", "--version"], stdout=subprocess.PIPE, check=True
         )
         if result.returncode != 0:
-            print("Please install fzf")
-            print("https://github.com/junegunn/fzf#installation")
-            self.logger.error("FZF not found")
+            self._fzf = False
 
         else:
+            self._fzf = True
             self._fzf_version = result.stdout.decode("utf-8").replace("\n", "")
             self.logger.debug(f"FZF version: {self._fzf_version}")
 
