@@ -111,7 +111,6 @@ class CustomHotkey:
             self.logger.debug('No config for any user found...')
             sys.exit(0)
 
-
     def edit_config(self):
         """[Use systems default editor to open config file]"""
         editor = os.getenv("VISUAL")
@@ -131,7 +130,6 @@ class CustomHotkey:
         yaml.dump(config, f'{self.configdir}/config.yaml',
                           default_flow_style=False)
 
-
     def read_config(self):
         with open(str(self.configdir) + '/config.yaml', 'r') as stream:
             try:
@@ -141,8 +139,6 @@ class CustomHotkey:
                 self.config = self.config['keys']
             except yaml.YAMLError as e:
                 self.logger.info(e)
-
-
 
     def add_command(self):
         print('Currently added commands:')

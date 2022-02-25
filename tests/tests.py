@@ -1,4 +1,3 @@
-import sys
 from customhotkey.hotkey import Fzf
 
 
