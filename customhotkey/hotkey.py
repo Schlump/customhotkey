@@ -87,7 +87,7 @@ class CustomHotkey:
         logging.basicConfig(
             stream=sys.stdout,
             format="%(asctime)s : %(message)s",
-            )
+                            )
         self.logger = logging.getLogger('CustomHotkey')
         self.logger.setLevel('DEBUG')
         self.init()
@@ -116,7 +116,7 @@ class CustomHotkey:
             print('Finished')
         detections = sorted(list(set(detections)))
         dump = {'meta':
-                {'input': device.path}, 'keys': {key:  "" for key in detections}
+                {'input': device.path}, 'keys': {key: "" for key in detections}
                 }
         with open(self.conf, "w") as file:
             yaml.dump(dump, file)
