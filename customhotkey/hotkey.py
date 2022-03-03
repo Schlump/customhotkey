@@ -87,7 +87,7 @@ class CustomHotkey:
         logging.basicConfig(
             stream=sys.stdout,
             format="%(asctime)s : %(message)s",
-                            )
+                    )
         self.logger = logging.getLogger('CustomHotkey')
         self.logger.setLevel('DEBUG')
         self.init()
