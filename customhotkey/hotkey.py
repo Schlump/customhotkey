@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 from evdev import InputDevice, categorize, ecodes
+import evdev
 import subprocess
 import logging
 import sys
@@ -10,7 +11,6 @@ import yaml
 
 def exit(f):
     """[Decorator for handling Keyboard interrupts]
-
     Args:
         f ([type]): [description]
     """
@@ -53,11 +53,9 @@ class Fzf:
     @exit
     def prompt(self, _list: list, fzf_options: str = None) -> list:
         """[Generic function to call fzf with a list]
-
         Args:
             _list (list): [description]
             fzf_options (str, optional): [description]. Defaults to None.
-
         Returns:
             list: [description]
         """
@@ -95,6 +93,33 @@ class CustomHotkey:
         self.init()
         self.input = pathlib.Path(f'/dev/input/by-id/{self.input}').resolve()
         self.device = f'{self.input}'
+
+    def setup(self):
+        devices = {evdev.InputDevice(path).name:
+                   {'device': evdev.InputDevice(path)} for path in evdev.list_devices()}
+        self.logger.info(f'Found {len(devices)}')
+        i = 0
+        for k, v in devices.items():
+            i += 1
+            print(f"ID {i}: {k}")
+        _id = int(input('Specify ID of device: '))
+        device = list(devices.values())[_id - 1]['device']
+        dev = evdev.InputDevice(device)
+        detections = []
+        try:
+            print('Press each key on your ')
+            for event in dev.read_loop():
+                if event.type == ecodes.EV_KEY:
+                    print(f'Key Pressed: {categorize(event).keycode}')
+                    detections.append(categorize(event).keycode)
+        except KeyboardInterrupt:
+            print('Finished')
+        detections = sorted(list(set(detections)))
+        dump = {'meta':
+                {'input': device.path}, 'keys': {key:  "" for key in detections}
+                }
+        with open(self.conf, "w") as file:
+            yaml.dump(dump, file)
 
     def init(self):
 
