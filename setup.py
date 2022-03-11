@@ -8,7 +8,7 @@ setup(
     author="",
     author_email="",
     install_requires=["pyyaml"],
-    packages=["customhotkey"],
+    packages=["hotkey"],
     scripts=[
         "bin/ck",
     ],
