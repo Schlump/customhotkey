@@ -1,5 +1,7 @@
 from customkey.hotkey import CustomHotkey
 from customkey.hotkey import Fzf
+import sys
+sys.path.append('.')
 
 
 def test_fzf():
