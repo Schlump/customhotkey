@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import argparse
-from customhotkey.hotkey import CustomHotkey
-from customhotkey.hotkey import Fzf
+from customkey.hotkey import CustomHotkey
+from customkey.hotkey import Fzf
 import time
 
 
