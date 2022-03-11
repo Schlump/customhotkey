@@ -1,7 +1,13 @@
-from customhotkey import customkey
+from customkey.hotkey import CustomHotkey
+from customkey.hotkey import Fzf
+
 
 def test_fzf():
-    dir(customkey)
 
-    #fzf = hotkey.Fzf()
-    #assert hasattr(fzf, '_fzf_version')
+    fzf = Fzf()
+    assert hasattr(fzf, '_fzf_version')
+
+
+def test_class():
+    ck = CustomHotkey()
+    assert hasattr(ck, '__version__')

@@ -89,6 +89,7 @@ class CustomHotkey:
             format="%(asctime)s : %(message)s",
                     )
         self.logger = logging.getLogger('CustomHotkey')
+        self.__version__ = '0.1'
         self.logger.setLevel('DEBUG')
         self.init()
         self.input = pathlib.Path(f'/dev/input/by-id/{self.input}').resolve()
