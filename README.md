@@ -5,7 +5,7 @@
 `fzf`
 ### Install via pip:
 
-Stable branch:
+
 ``` bash
 pip install git+ssh://git@github.com/schlump/customhotkey.git --force-reinstall
 ```

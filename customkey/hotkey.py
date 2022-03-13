@@ -134,7 +134,7 @@ class CustomHotkey:
 
         else:
             self.logger.debug('No config for any user found...')
-            sys.exit(0)
+            print('No config found, please run ck --init')
 
     def edit_config(self):
         """[Use systems default editor to open config file]"""
