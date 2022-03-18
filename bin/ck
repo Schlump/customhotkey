@@ -3,7 +3,7 @@ import argparse
 from customkey.hotkey import CustomHotkey
 from customkey.hotkey import Fzf
 import time
-
+import sys
 
 if __name__ == "__main__":
 
@@ -17,18 +17,7 @@ if __name__ == "__main__":
         help="Initialize Customhotkey with dummy config file",
         default=None,
     )
-    parser.add_argument(
-        "--remove",
-        action="store_true",
-        help="Remove Key from config file",
-        default=None,
-    )
 
-    parser.add_argument(
-        "--edit",
-        action="store_true",
-        help="Edit ck config",
-    )
     parser.add_argument(
         "--run",
         action="store_true",
@@ -50,22 +39,21 @@ if __name__ == "__main__":
             except OSError:
                 time.sleep(15)
                 pass
-
+    if args.init:
+        hk = CustomHotkey()
+        hk.setup()
+        sys.exit(0)
     if args.edit:
         hk = CustomHotkey()
         hk.edit_config()
 
     function = fzf.prompt(
-        [
-            "build",
-            "remove",
+        [   "execute_cmd",
             "edit_config"
         ],
         "--cycle --reverse --header=Choose function to use",
     )
-    if "build" in function:
-        pass
-    if "remove" in function:
+    if "execute_cmd" in function:
         pass
     if "edit_config" in function:
         hk = CustomHotkey()
