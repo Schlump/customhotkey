@@ -7,6 +7,7 @@ import sys
 import os
 import pathlib
 import yaml
+import getpass
 
 
 def exit(f):
@@ -91,6 +92,8 @@ class CustomHotkey:
         self.logger = logging.getLogger('CustomHotkey')
         self.__version__ = '0.1'
         self.logger.setLevel('DEBUG')
+        self.user = getpass.getuser()
+        self.configdir = pathlib.Path(f'/home/{self.user}/.config/customhotkey')
         self.init()
         self.input = pathlib.Path(f'/dev/input/by-id/{self.input}').resolve()
         self.device = f'{self.input}'
@@ -123,15 +126,10 @@ class CustomHotkey:
             yaml.dump(dump, file)
 
     def init(self):
-
-        for path in pathlib.Path('/home').iterdir():
-            self.user = path.stem
-            self.configdir = pathlib.Path(f'/home/{self.user}/.config/customhotkey')
-            self.logger.debug(f'Configdir -> {self.configdir}')
-            if pathlib.Path(self.configdir).exists():
-                self.read_config()
-                break
-
+        self.logger.debug(f'Configdir -> {self.configdir}')
+        if pathlib.Path(self.configdir).exists():
+            self.read_config()
+            return
         else:
             self.logger.debug('No config for any user found...')
             self.input = 'dummy'
