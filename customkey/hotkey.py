@@ -103,7 +103,7 @@ class CustomHotkey:
                    {'device': evdev.InputDevice(path)} for path in evdev.list_devices()}
         self.logger.info(f'Found {len(devices)}')
         selected = Fzf().prompt(devices)
-        device = devices[selected]['device']
+        device = devices[selected[0]]['device']
         dev = evdev.InputDevice(device)
         detections = []
         try:
