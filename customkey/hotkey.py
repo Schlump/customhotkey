@@ -102,15 +102,10 @@ class CustomHotkey:
         devices = {evdev.InputDevice(path).name:
                    {'device': evdev.InputDevice(path)} for path in evdev.list_devices()}
         self.logger.info(f'Found {len(devices)}')
-        i = 0
-        for k, v in devices.items():
-            i += 1
-            print(f"ID {i}: {k}")
-        _id = int(input('Specify ID of device: '))
-        device = list(devices.values())[_id - 1]['device']
+        selected = Fzf().prompt(devices)
+        device = devices[selected]['device']
         dev = evdev.InputDevice(device)
         detections = []
-        events = []
         try:
             print('Press each key on your ')
             for event in dev.read_loop():
@@ -118,7 +113,6 @@ class CustomHotkey:
                     event = categorize(event)
                     if event.key_down:
                         print(f'Key Pressed: {event.keycode}')
-                    events.append()
                     detections.append(event.keycode)
         except KeyboardInterrupt:
             print('Finished')
