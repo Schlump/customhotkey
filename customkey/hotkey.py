@@ -92,7 +92,7 @@ class CustomHotkey:
         self.logger = logging.getLogger('CustomHotkey')
         self.__version__ = '0.1'
         self.logger.setLevel('DEBUG')
-        self.user =     getpass.getuser()
+        self.user = getpass.getuser()
         self.configdir = pathlib.Path(f'/home/{self.user}/.config/customhotkey')
         self.init()
         self.input = pathlib.Path(f'/dev/input/by-id/{self.input}').resolve()
@@ -107,7 +107,8 @@ class CustomHotkey:
         dev = evdev.InputDevice(device)
         detections = []
         try:
-            print('Press each key on your ')
+            print('Press each key on your Custom keyboard...')
+            print('Hit CTRL + C when finished')
             for event in dev.read_loop():
                 if event.type == ecodes.EV_KEY:
                     event = categorize(event)
@@ -120,7 +121,7 @@ class CustomHotkey:
         dump = {'meta':
                 {'input': device.path}, 'keys': {key: "" for key in detections}
                 }
-        with open(self.conf, "w") as file:
+        with open(self.configdir+'/config.yaml', "w") as file:
             yaml.dump(dump, file)
 
     def init(self):

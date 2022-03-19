@@ -58,9 +58,8 @@ if __name__ == "__main__":
         hk.edit_config()
 
     function = fzf.prompt(
-        [   "execute_cmd",
-            "edit_config"
-        ],
+        ["execute_cmd",
+         "edit_config"],
         "--cycle --reverse --header=Choose function to use",
     )
     if "execute_cmd" in function:
