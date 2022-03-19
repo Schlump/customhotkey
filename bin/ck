@@ -47,7 +47,10 @@ if __name__ == "__main__":
                 pass
     if args.init:
         hk = CustomHotkey()
-        hk.setup()
+        try:
+            hk.setup()
+        except KeyboardInterrupt:
+            sys.exit(0)
         sys.exit(0)
 
     if args.edit:
