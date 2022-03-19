@@ -112,7 +112,7 @@ class CustomHotkey:
             for event in dev.read_loop():
                 if event.type == ecodes.EV_KEY:
                     event = categorize(event)
-                    if event.key_down:
+                    if event.key_down == 1:
                         print(f'Key Pressed: {event.keycode}')
                     detections.append(event.keycode)
         except KeyboardInterrupt:
@@ -121,7 +121,7 @@ class CustomHotkey:
         dump = {'meta':
                 {'input': device.path}, 'keys': {key: "" for key in detections}
                 }
-        with open(self.configdir+'/config.yaml', "w") as file:
+        with open(str(self.configdir) + '/config.yaml', "w") as file:
             yaml.dump(dump, file)
 
     def init(self):
