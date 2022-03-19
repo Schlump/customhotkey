@@ -24,6 +24,12 @@ if __name__ == "__main__":
         help="Run custom hotkey",
     )
 
+    parser.add_argument(
+        "--edit",
+        action="store_true",
+        help="Edit custom hotkey config",
+    )
+
     args = parser.parse_args()
 
     fzf = Fzf()
@@ -43,6 +49,7 @@ if __name__ == "__main__":
         hk = CustomHotkey()
         hk.setup()
         sys.exit(0)
+
     if args.edit:
         hk = CustomHotkey()
         hk.edit_config()
