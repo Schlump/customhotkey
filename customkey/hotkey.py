@@ -94,6 +94,7 @@ class CustomHotkey:
         self.logger.setLevel('DEBUG')
         self.user = getpass.getuser()
         self.configdir = pathlib.Path(f'/home/{self.user}/.config/customhotkey')
+        self.config_file = str(self.configdir) + '/config.yaml'
         self.init()
         self.input = pathlib.Path(f'/dev/input/by-id/{self.input}').resolve()
         self.device = f'{self.input}'
@@ -118,11 +119,20 @@ class CustomHotkey:
         except KeyboardInterrupt:
             print('Finished')
         detections = sorted(list(set(detections)))
-        dump = {'meta':
-                {'input': device.path}, 'keys': {key: "" for key in detections}
-                }
-        with open(str(self.configdir) + '/config.yaml', "w") as file:
-            yaml.dump(dump, file)
+        if pathlib.Path(self.configdir).exists():
+            self.read_config()
+            dump = {'meta':
+                    {'input': device.path}, 'keys':
+                        {key: ("" if key not in self.config() else self.config()[key])
+                            for key in detections}
+                    }
+        else:
+            dump = {'meta':
+                    {'input': device.path}, 'keys':
+                        {key: "" for key in detections}
+                    }
+        with open(self.config_file, "w") as file:
+            yaml.safe_dump(dump, file)
 
     def init(self):
         self.logger.debug(f'Configdir -> {self.configdir}')
