@@ -124,7 +124,7 @@ class CustomHotkey:
             dump = {'meta':
                     {'input': device.path}, 'keys':
                         {key: ("" if key not in self.config.keys()
-                               else self.config()[key])
+                               else self.config[key])
                             for key in detections}
                     }
         else:
