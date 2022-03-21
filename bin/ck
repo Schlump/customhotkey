@@ -12,25 +12,21 @@ if __name__ == "__main__":
     )
     parser.add_argument("--debug", action="store_true", help="Turn on Debug Mode")
 
-
     subparser = parser.add_subparsers(
         "--init",
         dest="action",
-        title='Run CustmKey',
-        help="Run CustomKey",
+        help="Run CustomKey"
 
     )
     subparser = parser.add_subparsers(
         "--run",
         dest="action",
-        title='Run CustmKey',
-        help="Run CustomKey",
-
+        help="Run CustomKey"
     )
 
     subparser.add_argument(
         "--user",
-        title='Specify user for config file',
+        help='Specify user for config file',
         default=None,
     )
 
