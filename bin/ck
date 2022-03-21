@@ -12,13 +12,19 @@ if __name__ == "__main__":
     )
     parser.add_argument("--debug", action="store_true", help="Turn on Debug Mode")
 
-    subparser = parser.add_subparsers(
+    subparsers = parser.add_subparsers(
+        help="",
+        dest="action",
+        Title="Action"
+
+    )
+    subparser = subparsers.add_subparsers(
         "--init",
         dest="action",
         help="Run CustomKey"
 
     )
-    subparser = parser.add_subparsers(
+    subparser = subparsers.add_subparsers(
         "--run",
         dest="action",
         help="Run CustomKey"
@@ -30,7 +36,7 @@ if __name__ == "__main__":
         default=None,
     )
 
-    subparser = parser.add_subparsers(
+    subparser = subparsers.add_subparsers(
         "--edit",
         dest="action",
         help="Edit custom hotkey config",
