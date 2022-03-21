@@ -105,7 +105,7 @@ class CustomHotkey:
         devices = {evdev.InputDevice(path).name:
                    {'device': evdev.InputDevice(path)} for path in evdev.list_devices()}
 
-        _ids = {i.resolve(): i.stem for
+        _ids = {str(i.resolve()): i.parts[-1] for
                 i in list(pathlib.Path('/dev/input/by-id').glob('**/*'))}
         self.logger.info(f'Found {len(devices)}')
         selected = Fzf().prompt(devices)
