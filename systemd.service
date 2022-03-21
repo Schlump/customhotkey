@@ -5,8 +5,8 @@ Description=CustomHotkey service
 Type=simple
 Environment="DISPLAY=:0"
 Environment="XAUTHORITY=/home/{user}/.Xauthority"
-ExecStart={path/to/bin} --run
-Restart=on-failure
+ExecStart={path/to/bin} run
+Restart=on-failureMNENeNeasfdasdf
 RestartSec=5s
 StartLimitBurst=5
 [Install]

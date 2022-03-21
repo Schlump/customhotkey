@@ -121,7 +121,7 @@ class CustomHotkey:
             for event in dev.read_loop():
                 if event.type == ecodes.EV_KEY:
                     event = categorize(event)
-                    if event.key_down == 1:
+                    if event.keystate == event.key_down:
                         print(f'Key Pressed: {event.keycode}')
                     detections.append(event.keycode)
         except KeyboardInterrupt:
