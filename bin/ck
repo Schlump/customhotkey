@@ -48,12 +48,13 @@ if __name__ == "__main__":
 
     if args.action == 'run':
         hk = CustomHotkey(args.user)
-        while True:
-            try:
-                hk.enter_loop()
-            except OSError:
-                time.sleep(15)
-                pass
+        try:
+            hk.enter_loop()
+        except OSError as e:
+            print(e)
+        finally:
+            sys.exit(0)
+
     if args.action == 'init':
         hk = CustomHotkey(args.user)
         try:
