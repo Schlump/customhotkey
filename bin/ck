@@ -19,12 +19,12 @@ if __name__ == "__main__":
 
     )
     subparser = subparsers.add_parser(
-        "--init",
+        "init",
         help="Run CustomKey"
 
     )
     subparser = subparsers.add_parser(
-        "--run",
+        "run",
         help="Run CustomKey"
     )
 
@@ -35,7 +35,7 @@ if __name__ == "__main__":
     )
 
     subparser = subparsers.add_parser(
-        "--edit",
+        "edit",
         help="Edit custom hotkey config",
     )
 
