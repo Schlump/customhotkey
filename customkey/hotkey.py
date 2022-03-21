@@ -91,7 +91,7 @@ class CustomHotkey:
                     )
         self.logger = logging.getLogger('CustomHotkey')
         self.__version__ = '0.1'
-        self.logger.setLevel('DEBUG')
+        self.logger.setLevel('INFO')
         self.user = user
         if not self.user:
             self.user = getpass.getuser()
@@ -148,7 +148,7 @@ class CustomHotkey:
 
     def init(self):
         self.logger.debug(f'Configdir -> {self.configdir}')
-        if pathlib.Path(self.configdir).exists():
+        if pathlib.Path(self.config_file).exists():
             self.read_config()
             return
         else:
