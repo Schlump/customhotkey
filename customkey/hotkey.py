@@ -118,12 +118,13 @@ class CustomHotkey:
         try:
             print('Press each key on your Custom keyboard...')
             print('Hit CTRL + C when finished')
-            for event in dev.read_loop():
-                if event.type == ecodes.EV_KEY:
-                    event = categorize(event)
-                    if event.keystate == event.key_down:
-                        print(f'Key Pressed: {event.keycode}')
-                    detections.append(event.keycode)
+            with dev.grab_context():
+                for event in dev.read_loop():
+                    if event.type == ecodes.EV_KEY:
+                        event = categorize(event)
+                        if event.keystate == event.key_down:
+                            print(f'Key Pressed: {event.keycode}')
+                        detections.append(event.keycode)
         except KeyboardInterrupt:
             print('Finished')
         detections = sorted(list(set(detections)))
