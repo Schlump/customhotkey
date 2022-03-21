@@ -67,12 +67,12 @@ if __name__ == "__main__":
         hk.edit_config()
 
     function = fzf.prompt(
-        ["execute_cmd",
-         "edit_config"],
+        ["execute cmd",
+         "edit config"],
         "--cycle --reverse --header=Choose function to use",
     )
-    if "execute_cmd" in function:
+    if "execute cmd" in function:
         pass
-    if "edit_config" in function:
+    if "edit config" in function:
         hk = CustomHotkey()
         hk.edit_config()
