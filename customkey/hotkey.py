@@ -104,6 +104,9 @@ class CustomHotkey:
     def setup(self):
         devices = {evdev.InputDevice(path).name:
                    {'device': evdev.InputDevice(path)} for path in evdev.list_devices()}
+
+        _ids = {i.resolve(): i.stem for
+                i in list(pathlib.Path('/dev/input/by-id').glob('**/*'))}
         self.logger.info(f'Found {len(devices)}')
         selected = Fzf().prompt(devices)
         device = devices[selected[0]]['device']
@@ -124,14 +127,14 @@ class CustomHotkey:
         if pathlib.Path(self.configdir).exists():
             self.read_config()
             dump = {'meta':
-                    {'input': device.path}, 'keys':
+                    {'input': _ids[device.path]}, 'keys':
                         {key: ("" if key not in self.config.keys()
                                else self.config[key])
                             for key in detections}
                     }
         else:
             dump = {'meta':
-                    {'input': device.path}, 'keys':
+                    {'input': _ids[device.path]}, 'keys':
                         {key: "" for key in detections}
                     }
         with open(self.config_file, "w") as file:
