@@ -47,15 +47,15 @@ if __name__ == "__main__":
         pass
 
     if args.action == 'run':
-        app = CustomHotkey(args.user)
+        hk = CustomHotkey(args.user)
         while True:
             try:
-                app.enter_loop()
+                hk.enter_loop()
             except OSError:
                 time.sleep(15)
                 pass
     if args.action == 'init':
-        hk = CustomHotkey()
+        hk = CustomHotkey(args.user)
         try:
             hk.setup()
         except KeyboardInterrupt:
@@ -63,7 +63,7 @@ if __name__ == "__main__":
         sys.exit(0)
 
     if args.action == 'edit':
-        hk = CustomHotkey()
+        hk = CustomHotkey(args.user)
         hk.edit_config()
 
     function = fzf.prompt(
@@ -73,12 +73,12 @@ if __name__ == "__main__":
         "--cycle --reverse --header=Choose function to use",
     )
     if "execute cmd" in function:
-        hk = CustomHotkey()
+        hk = CustomHotkey(args.user)
         hk.execute_command()
 
     if "init" in function:
         try:
-            hk = CustomHotkey()
+            hk = CustomHotkey(args.user)
             hk.setup()
         except OSError as e:
             print(e)
@@ -86,5 +86,5 @@ if __name__ == "__main__":
             sys.exit(0)
 
     if "edit config" in function:
-        hk = CustomHotkey()
+        hk = CustomHotkey(args.user)
         hk.edit_config()
