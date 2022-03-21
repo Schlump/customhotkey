@@ -78,6 +78,7 @@ if __name__ == "__main__":
 
     if "init" in function:
         try:
+            hk = CustomHotkey()
             hk.setup()
         except KeyboardInterrupt:
             sys.exit(0)
