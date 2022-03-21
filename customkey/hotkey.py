@@ -92,7 +92,8 @@ class CustomHotkey:
         self.logger = logging.getLogger('CustomHotkey')
         self.__version__ = '0.1'
         self.logger.setLevel('DEBUG')
-        if not user:
+        self.user = user
+        if not self.user:
             self.user = getpass.getuser()
         self.configdir = pathlib.Path(f'/home/{self.user}/.config/customhotkey')
         self.config_file = str(self.configdir) + '/config.yaml'
