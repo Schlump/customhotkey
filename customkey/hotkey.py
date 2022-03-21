@@ -95,7 +95,7 @@ class CustomHotkey:
         self.user = user
         if not self.user:
             self.user = getpass.getuser()
-        self.configdir = pathlib.Path(f'/home/{self.user}/.config/customhotkey')
+        self.configdir = os.path.expanduser(f'~{self.user}') + '/.config/customkey'
         self.config_file = str(self.configdir) + '/config.yaml'
         self.init()
         self.input = pathlib.Path(f'/dev/input/by-id/{self.input}').resolve()
