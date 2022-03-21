@@ -84,7 +84,7 @@ class Fzf:
 
 class CustomHotkey:
 
-    def __init__(self):
+    def __init__(self, user: str = None):
         logging.basicConfig(
             stream=sys.stdout,
             format="%(asctime)s : %(message)s",
@@ -92,7 +92,8 @@ class CustomHotkey:
         self.logger = logging.getLogger('CustomHotkey')
         self.__version__ = '0.1'
         self.logger.setLevel('DEBUG')
-        self.user = getpass.getuser()
+        if not user:
+            self.user = getpass.getuser()
         self.configdir = pathlib.Path(f'/home/{self.user}/.config/customhotkey')
         self.config_file = str(self.configdir) + '/config.yaml'
         self.init()

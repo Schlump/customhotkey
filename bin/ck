@@ -11,22 +11,32 @@ if __name__ == "__main__":
         description="Customhotkey.."
     )
     parser.add_argument("--debug", action="store_true", help="Turn on Debug Mode")
-    parser.add_argument(
+
+
+    subparser = parser.add_subparsers(
         "--init",
-        action="store_true",
-        help="Initialize Customhotkey with dummy config file",
+        dest="action",
+        title='Run CustmKey',
+        help="Run CustomKey",
+
+    )
+    subparser = parser.add_subparsers(
+        "--run",
+        dest="action",
+        title='Run CustmKey',
+        help="Run CustomKey",
+
+    )
+
+    subparser.add_argument(
+        "--user",
+        title='Specify user for config file',
         default=None,
     )
 
-    parser.add_argument(
-        "--run",
-        action="store_true",
-        help="Run custom hotkey",
-    )
-
-    parser.add_argument(
+    subparser = parser.add_subparsers(
         "--edit",
-        action="store_true",
+        dest="action",
         help="Edit custom hotkey config",
     )
 
@@ -37,15 +47,15 @@ if __name__ == "__main__":
     if args.debug:
         pass
 
-    if args.run:
-        app = CustomHotkey()
+    if args.action == 'run':
+        app = CustomHotkey(args.user)
         while True:
             try:
                 app.enter_loop()
             except OSError:
                 time.sleep(15)
                 pass
-    if args.init:
+    if args.action == 'init':
         hk = CustomHotkey()
         try:
             hk.setup()
@@ -53,7 +63,7 @@ if __name__ == "__main__":
             sys.exit(0)
         sys.exit(0)
 
-    if args.edit:
+    if args.action == 'edit':
         hk = CustomHotkey()
         hk.edit_config()
 
