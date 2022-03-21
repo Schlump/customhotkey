@@ -127,7 +127,7 @@ class CustomHotkey:
         except KeyboardInterrupt:
             print('Finished')
         detections = sorted(list(set(detections)))
-        if pathlib.Path(self.configdir).exists():
+        if pathlib.Path(self.config_file).exists():
             self.read_config()
             dump = {'meta':
                     {'input': _ids[device.path]}, 'keys':
@@ -140,6 +140,8 @@ class CustomHotkey:
                     {'input': _ids[device.path]}, 'keys':
                         {key: "" for key in detections}
                     }
+        if not pathlib.Path(self.config_dir).exists():
+            os.makedirs(self.config_dir)
         with open(self.config_file, "w") as file:
             yaml.safe_dump(dump, file)
 
