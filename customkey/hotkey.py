@@ -156,6 +156,13 @@ class CustomHotkey:
             self.input = 'dummy'
             print('No config found, please run ck --init')
 
+    def execute_command(self):
+
+        selected = Fzf().prompt(' '.join(self.config.values))[0]
+        self.logger.debug(f'Executing {selected}')
+        subprocess.Popen(["/bin/bash", "-i", "-c", selected])
+        sys.exit(0)
+
     def edit_config(self):
         """[Use systems default editor to open config file]"""
         editor = os.getenv("VISUAL")
@@ -184,15 +191,6 @@ class CustomHotkey:
                 self.config = self.config['keys']
             except yaml.YAMLError as e:
                 self.logger.info(e)
-
-    def add_command(self):
-        print('Currently added commands:')
-        for i, key in enumerate(self.config.keys(), 1):
-            print(f'[i]: {key} -> {self.config[key]}')
-        print(f'For which Key would you add a cmd? [1-{len(self.config.keys())}]')
-        inp = int(input())
-        key = self.config.keys()[inp]
-        print(key)
 
     def detect_device(self):
         try:
