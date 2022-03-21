@@ -108,8 +108,11 @@ class CustomHotkey:
         _ids = {str(i.resolve()): i.parts[-1] for
                 i in list(pathlib.Path('/dev/input/by-id').glob('**/*'))}
         self.logger.info(f'Found {len(devices)}')
+        self.logger.debug(_ids)
+        self.logger.debug(devices)
         selected = Fzf().prompt(devices)
         device = devices[selected[0]]['device']
+        self.logger.debug(f'Device selected: {device}')
         dev = evdev.InputDevice(device)
         detections = []
         try:
