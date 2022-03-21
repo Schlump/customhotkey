@@ -158,7 +158,7 @@ class CustomHotkey:
 
     def execute_command(self):
 
-        selected = Fzf().prompt(' '.join(self.config.values()))[0]
+        selected = Fzf().prompt(list(self.config.values()))[0]
         self.logger.debug(f'Executing {selected}')
         subprocess.Popen(["/bin/bash", "-i", "-c", selected])
         sys.exit(0)
