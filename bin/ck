@@ -77,13 +77,9 @@ if __name__ == "__main__":
         hk.execute_command()
 
     if "init" in function:
-        try:
-            hk = CustomHotkey()
-            hk.setup()
-        except KeyboardInterrupt:
-            sys.exit(0)
-        finally:
-            sys.exit(0)
+        hk = CustomHotkey()
+        hk.setup()
+        sys.exit(0)
 
     if "edit config" in function:
         hk = CustomHotkey()
