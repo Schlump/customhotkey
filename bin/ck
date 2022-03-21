@@ -15,7 +15,7 @@ if __name__ == "__main__":
     subparsers = parser.add_subparsers(
         help="",
         dest="action",
-        Title="Action"
+        title="Action"
 
     )
     subparser = subparsers.add_subparsers(
