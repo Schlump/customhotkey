@@ -111,7 +111,7 @@ class CustomHotkey:
         self.logger.debug(_ids)
         self.logger.debug(devices)
         selected = Fzf().prompt(devices, "--height=40% --layout=reverse \
-                                --border --header Select input device \
+                                --border --header=Select input device \
                                 --header-lines=1")
         device = devices[selected[0]]['device']
         self.logger.debug(f'Device selected: {device}')
