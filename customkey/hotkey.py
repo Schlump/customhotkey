@@ -84,14 +84,14 @@ class Fzf:
 
 class CustomHotkey:
 
-    def __init__(self, user: str = None):
+    def __init__(self, user: str = None, log_lvl='INFO'):
         logging.basicConfig(
             stream=sys.stdout,
             format="%(asctime)s : %(message)s",
                     )
         self.logger = logging.getLogger('CustomHotkey')
         self.__version__ = '0.1'
-        self.logger.setLevel('INFO')
+        self.logger.setLevel(log_lvl)
         self.user = user
         if not self.user:
             self.user = getpass.getuser()

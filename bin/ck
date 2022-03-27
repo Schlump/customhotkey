@@ -42,12 +42,12 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     fzf = Fzf()
-
+    log_lv = 'INFO'
     if args.debug:
-        pass
+        log_lvl = 'DEBUG'
 
     if args.action == 'run':
-        hk = CustomHotkey()
+        hk = CustomHotkey(log_lvl=log_lvl)
         try:
             hk.enter_loop()
         except OSError as e:
@@ -56,7 +56,7 @@ if __name__ == "__main__":
             sys.exit(0)
 
     if args.action == 'init':
-        hk = CustomHotkey()
+        hk = CustomHotkey(log_lvl=log_lvl)
         try:
             hk.setup()
         except KeyboardInterrupt:
@@ -64,7 +64,7 @@ if __name__ == "__main__":
         sys.exit(0)
 
     if args.action == 'edit':
-        hk = CustomHotkey()
+        hk = CustomHotkey(log_lvl=log_lvl)
         hk.edit_config()
 
     function = fzf.prompt(
@@ -76,7 +76,7 @@ if __name__ == "__main__":
     )
 
     if "run" in function:
-        hk = CustomHotkey()
+        hk = CustomHotkey(log_lvl=log_lvl)
         try:
             hk.enter_loop()
         except OSError as e:
@@ -85,12 +85,12 @@ if __name__ == "__main__":
             sys.exit(0)
 
     if "execute cmd" in function:
-        hk = CustomHotkey()
+        hk = CustomHotkey(log_lvl=log_lvl)
         hk.execute_command()
 
     if "init" in function:
         try:
-            hk = CustomHotkey()
+            hk = CustomHotkey(log_lvl=log_lvl)
             hk.setup()
         except OSError as e:
             print(e)
@@ -98,5 +98,5 @@ if __name__ == "__main__":
             sys.exit(0)
 
     if "edit config" in function:
-        hk = CustomHotkey()
+        hk = CustomHotkey(log_lvl=log_lvl)
         hk.edit_config()
