@@ -201,7 +201,6 @@ class CustomHotkey:
         return True
 
     def enter_loop(self):
-        self.logger.debug('Entering infinite loop')
         try:
             self.dev = InputDevice(self.device)
             self.dev.grab()
@@ -209,6 +208,7 @@ class CustomHotkey:
             self.logger.error(e)
             sys.exit(1)
 
+        self.logger.debug('Entering infinite loop')
         for event in self.dev.read_loop():
             if event.type == ecodes.EV_KEY:
                 cat = categorize(event)
