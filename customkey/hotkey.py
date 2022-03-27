@@ -110,7 +110,7 @@ class CustomHotkey:
         self.logger.debug(f'Found {len(devices)} devices')
         self.logger.debug(_ids)
         self.logger.debug(devices)
-        selected = Fzf().prompt(devices, "--height=40% --layout=reverse \
+        selected = Fzf().prompt(devices, "--height=80% --layout=reverse \
                                 --border --header=Select input device")
         device = devices[selected[0]]['device']
         self.logger.info(f'Device selected: {device}')
@@ -212,7 +212,7 @@ class CustomHotkey:
             if event.type == ecodes.EV_KEY:
                 cat = categorize(event)
                 if cat.keystate == cat.key_down:
-                    self.logger.debug(f'Key pressed: {cat.keycode}') 
+                    self.logger.debug(f'Key pressed: {cat.keycode}')
                     try:
                         cmd = self.config[cat.keycode]
                     except KeyError:
@@ -221,7 +221,13 @@ class CustomHotkey:
                         pass
                     if cmd:
                         self.logger.debug(f'Executing {cmd}')
-                        subprocess.Popen(["/bin/bash", "-i", "-c", cmd])
+                        try:
+                            subprocess.check_output(["/bin/bash", "-i", "-c", cmd])
+                        except subprocess.CalledProcessError as e:
+                            self.logger.debug(e.output)
+                            self.logger.debug(e.returncode)
+
+                            pass
 
     def _check_root(self):
         user = os.getenv("SUDO_USER")
