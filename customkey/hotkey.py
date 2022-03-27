@@ -206,7 +206,7 @@ class CustomHotkey:
             self.dev.grab()
         except OSError as e:
             self.logger.error(e)
-            return
+            sys.exit(1)
 
         self.logger.debug('Entering infinite loop')
         for event in self.dev.read_loop():
