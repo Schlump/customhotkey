@@ -110,7 +110,9 @@ class CustomHotkey:
         self.logger.info(f'Found {len(devices)}')
         self.logger.debug(_ids)
         self.logger.debug(devices)
-        selected = Fzf().prompt(devices)
+        selected = Fzf().prompt(devices, r"--height 40% \
+                        --layout=reverse --border --header \
+                        'Select input devvice' --header-lines=1")
         device = devices[selected[0]]['device']
         self.logger.debug(f'Device selected: {device}')
         dev = evdev.InputDevice(device)
@@ -211,7 +213,7 @@ class CustomHotkey:
             if event.type == ecodes.EV_KEY:
                 cat = categorize(event)
                 if cat.keystate == cat.key_down:
-                    self.logger.debug(f'Key pressed: {cat.keycode}')
+                    self.logger.debug(f'Key pressed: {cat.keycode}') 
                     try:
                         cmd = self.config[cat.keycode]
                     except KeyError:
