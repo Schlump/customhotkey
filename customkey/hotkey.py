@@ -207,6 +207,7 @@ class CustomHotkey:
             self.dev.grab()
         except OSError as e:
             self.logger.error(e)
+            sys.exit(1)
 
         for event in self.dev.read_loop():
             if event.type == ecodes.EV_KEY:
@@ -226,8 +227,7 @@ class CustomHotkey:
                         except subprocess.CalledProcessError as e:
                             self.logger.debug(e.output)
                             self.logger.debug(e.returncode)
-
-                            pass
+                            continue
 
     def _check_root(self):
         user = os.getenv("SUDO_USER")
