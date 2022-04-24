@@ -97,8 +97,11 @@ class CustomHotkey:
             self.user = getpass.getuser()
         self.configdir = os.path.expanduser(f'~{self.user}') + '/.config/customkey'
         self.config_file = str(self.configdir) + '/config.yaml'
+        self.logger.debug(f'Config path {self.configdir }')
+        self.logger.debug(f'Config file {self.config_file }')
         self.init()
         self.input = pathlib.Path(f'/dev/input/by-id/{self.input}').resolve()
+        self.logger.debug(f'Input {self.input }')
         self.device = f'{self.input}'
 
     def setup(self):
