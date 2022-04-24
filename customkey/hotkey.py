@@ -155,7 +155,8 @@ class CustomHotkey:
         else:
             self.logger.debug('No config for any user found...')
             self.input = 'dummy'
-            print('No config found, please run ck --init')
+            self.logger.error('No config found, please run ck --init')
+            sys.exit(0)
 
     def execute_command(self):
 
@@ -225,10 +226,8 @@ class CustomHotkey:
                                     self.logger.debug(e.returncode)
                                     continue
         except OSError as e:
-            print('foo')
             self.logger.error(e)
             sys.exit(1)
-
 
     def _check_root(self):
         user = os.getenv("SUDO_USER")
