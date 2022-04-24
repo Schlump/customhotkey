@@ -50,8 +50,6 @@ if __name__ == "__main__":
         hk = CustomHotkey(log_lvl=log_lvl)
         hk.enter_loop()
 
-
-
     if args.action == 'init':
         hk = CustomHotkey(log_lvl=log_lvl)
         try:
@@ -73,9 +71,8 @@ if __name__ == "__main__":
     )
 
     if "run" in function:
-        hk = CustomHotkey(log_lvl=log_lvl)
+        hk = CustomHotkey(log_lvl=log_lvl, user=args.user)
         hk.enter_loop()
-
 
     if "execute cmd" in function:
         hk = CustomHotkey(log_lvl=log_lvl)
