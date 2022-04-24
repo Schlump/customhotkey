@@ -42,7 +42,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     fzf = Fzf()
-    log_lv = 'INFO'
+    log_lvl = 'INFO'
     if args.debug:
         log_lvl = 'DEBUG'
 

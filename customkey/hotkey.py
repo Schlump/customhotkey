@@ -203,31 +203,32 @@ class CustomHotkey:
     def enter_loop(self):
         try:
             self.dev = InputDevice(self.device)
-            self.dev.grab()
+            with self.dev.grab_context():
+                self.logger.debug('Entering infinite loop')
+                for event in self.dev.read_loop():
+                    if event.type == ecodes.EV_KEY:
+                        cat = categorize(event)
+                        if cat.keystate == cat.key_down:
+                            self.logger.debug(f'Key pressed: {cat.keycode}')
+                            try:
+                                cmd = self.config[cat.keycode]
+                            except KeyError:
+                                self.logger.debug(f'No cmd for {cat.keycode} found in config')
+                                cmd = None
+                                pass
+                            if cmd:
+                                self.logger.debug(f'Executing {cmd}')
+                                try:
+                                    subprocess.check_output(["/bin/bash", "-i", "-c", cmd])
+                                except subprocess.CalledProcessError as e:
+                                    self.logger.debug(e.output)
+                                    self.logger.debug(e.returncode)
+                                    continue
         except OSError as e:
+            print('foo')
             self.logger.error(e)
             sys.exit(1)
 
-        self.logger.debug('Entering infinite loop')
-        for event in self.dev.read_loop():
-            if event.type == ecodes.EV_KEY:
-                cat = categorize(event)
-                if cat.keystate == cat.key_down:
-                    self.logger.debug(f'Key pressed: {cat.keycode}')
-                    try:
-                        cmd = self.config[cat.keycode]
-                    except KeyError:
-                        self.logger.debug(f'No cmd for {cat.keycode} found in config')
-                        cmd = None
-                        pass
-                    if cmd:
-                        self.logger.debug(f'Executing {cmd}')
-                        try:
-                            subprocess.check_output(["/bin/bash", "-i", "-c", cmd])
-                        except subprocess.CalledProcessError as e:
-                            self.logger.debug(e.output)
-                            self.logger.debug(e.returncode)
-                            continue
 
     def _check_root(self):
         user = os.getenv("SUDO_USER")
