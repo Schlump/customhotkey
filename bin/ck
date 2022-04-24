@@ -47,7 +47,7 @@ if __name__ == "__main__":
         log_lvl = 'DEBUG'
 
     if args.action == 'run':
-        hk = CustomHotkey(log_lvl=log_lvl)
+        hk = CustomHotkey(user= args.user, log_lvl=log_lvl)
         hk.enter_loop()
 
     if args.action == 'init':
