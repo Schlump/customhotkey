@@ -10,5 +10,5 @@ def test_fzf():
 
 
 def test_class():
-    ck = CustomHotkey()
+    ck = CustomHotkey(user="test")
     assert hasattr(ck, '__version__')

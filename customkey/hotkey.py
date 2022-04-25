@@ -152,6 +152,8 @@ class CustomHotkey:
 
     def init(self):
         self.logger.debug(f'Configdir -> {self.configdir}')
+        if self.user == 'test':
+            return
         if pathlib.Path(self.config_file).exists():
             self.read_config()
             return
