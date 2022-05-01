@@ -1,15 +1,13 @@
-
 [Unit]
 Description=CustomHotkey service
 [Service]
 Type=simple
 Environment="DISPLAY=:0"
-Environment="XAUTHORITY=/home/{user}/.Xauthority"
-ExecStart={path/to/bin} run
-Restart=on-failureMNENeNeasfdasdf
+Environment="XAUTHORITY=/home/<user>/.Xauthority"
+ExecStart=<python_install_path>/bin/ck run --user <user>
+Restart=on-failure
 RestartSec=5s
 StartLimitBurst=5
 [Install]
 WantedBy=multi-user.target
 WantedBy=xsession.target
-
