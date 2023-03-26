@@ -3,6 +3,7 @@
 
 # Python script to easily run commands via custom keyboard in Linux
 
+# For device detection user either needs to be in input group or run with root privileges.. your call.
 ### Requirements
 `fzf`
 ### Install via pip:

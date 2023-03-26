@@ -132,11 +132,15 @@ class CustomHotkey:
             print("Hit CTRL + C when finished")
             with dev.grab_context():
                 for event in dev.read_loop():
-                    if event.type == ecodes.EV_KEY:
-                        event = categorize(event)
-                        if event.keystate == event.key_down:
-                            print(f"Key Pressed: {event.keycode}")
-                        detections.append(event.keycode)
+                    try:
+                        if event.type == ecodes.EV_KEY:
+                            event = categorize(event)
+                            if event.keystate == event.key_down:
+                                print(f"Key Pressed: {event.keycode}")
+                            detections.append(event.keycode)
+                    except OSError as e:
+                        self.logger.debug(f"ERROR: {e}")
+                        continue
         except KeyboardInterrupt:
             print("Finished")
         detections = sorted(list(set(detections)))
