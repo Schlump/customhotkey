@@ -9,5 +9,5 @@
 
 
 ``` bash
-pip install git+ssh://git@github.com/schlump/customhotkey.git --force-reinstall
+pip install git+https://github.com/schlump/customhotkey.git --force-reinstall
 ```
