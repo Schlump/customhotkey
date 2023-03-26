@@ -83,91 +83,103 @@ class Fzf:
 
 
 class CustomHotkey:
-
-    def __init__(self, user: str = None, log_lvl='INFO'):
+    def __init__(self, user: str = None, log_lvl="INFO"):
         logging.basicConfig(
             stream=sys.stdout,
             format="%(asctime)s : %(message)s",
-                    )
-        self.logger = logging.getLogger('CustomHotkey')
-        self.__version__ = '0.1'
+        )
+        self.logger = logging.getLogger("CustomHotkey")
+        self.__version__ = "0.1"
         self.logger.setLevel(log_lvl)
         self.user = user
         if not self.user:
             self.user = getpass.getuser()
-        self.configdir = os.path.expanduser(f'~{self.user}') + '/.config/customkey'
-        self.config_file = str(self.configdir) + '/config.yaml'
-        self.logger.debug(f'Config path {self.configdir }')
-        self.logger.debug(f'Config file {self.config_file }')
+        self.configdir = (
+            os.path.expanduser(f"~{self.user}") + "/.config/customkey"
+        )
+        self.config_file = str(self.configdir) + "/config.yaml"
+        self.logger.debug(f"Config path {self.configdir }")
+        self.logger.debug(f"Config file {self.config_file }")
         self.init()
-        self.input = pathlib.Path(f'/dev/input/by-id/{self.input}').resolve()
-        self.logger.debug(f'Input {self.input }')
-        self.device = f'{self.input}'
+        self.input = pathlib.Path(f"/dev/input/by-id/{self.input}").resolve()
+        self.logger.debug(f"Input {self.input }")
+        self.device = f"{self.input}"
 
     def setup(self):
-        devices = {evdev.InputDevice(path).name:
-                   {'device': evdev.InputDevice(path)} for path in evdev.list_devices()}
+        devices = {
+            evdev.InputDevice(path).name: {"device": evdev.InputDevice(path)}
+            for path in evdev.list_devices()
+        }
 
-        _ids = {str(i.resolve()): i.parts[-1] for
-                i in list(pathlib.Path('/dev/input/by-id').glob('**/*'))}
-        self.logger.debug(f'Found {len(devices)} devices')
+        _ids = {
+            str(i.resolve()): i.parts[-1]
+            for i in list(pathlib.Path("/dev/input/by-id").glob("**/*"))
+        }
+        self.logger.debug(f"Found {len(devices)} devices")
         self.logger.debug(_ids)
         self.logger.debug(devices)
-        selected = Fzf().prompt(devices, "--height=80% --layout=reverse \
-                                --border --header=Select input device")
-        device = devices[selected[0]]['device']
-        self.logger.info(f'Device selected: {device}')
+        selected = Fzf().prompt(
+            devices,
+            "--height=80% --layout=reverse \
+                                --border --header=Select input device",
+        )
+        device = devices[selected[0]]["device"]
+        self.logger.info(f"Device selected: {device}")
         dev = evdev.InputDevice(device)
         detections = []
         try:
-            print('Press each key on your Custom keyboard...')
-            print('Hit CTRL + C when finished')
+            print("Press each key on your Custom keyboard...")
+            print("Hit CTRL + C when finished")
             with dev.grab_context():
                 for event in dev.read_loop():
                     if event.type == ecodes.EV_KEY:
                         event = categorize(event)
                         if event.keystate == event.key_down:
-                            print(f'Key Pressed: {event.keycode}')
+                            print(f"Key Pressed: {event.keycode}")
                         detections.append(event.keycode)
         except KeyboardInterrupt:
-            print('Finished')
+            print("Finished")
         detections = sorted(list(set(detections)))
         if pathlib.Path(self.config_file).exists():
             self.read_config()
-            dump = {'meta':
-                    {'input': _ids[device.path]}, 'keys':
-                        {key: ("" if key not in self.config.keys()
-                               else self.config[key])
-                            for key in detections}
-                    }
+            dump = {
+                "meta": {"input": _ids[device.path]},
+                "keys": {
+                    key: (
+                        ""
+                        if key not in self.config.keys()
+                        else self.config[key]
+                    )
+                    for key in detections
+                },
+            }
         else:
-            dump = {'meta':
-                    {'input': _ids[device.path]}, 'keys':
-                        {key: "" for key in detections}
-                    }
+            dump = {
+                "meta": {"input": _ids[device.path]},
+                "keys": {key: "" for key in detections},
+            }
         if not pathlib.Path(self.configdir).exists():
             os.makedirs(self.configdir)
         with open(self.config_file, "w") as file:
             yaml.safe_dump(dump, file)
 
     def init(self):
-        self.logger.debug(f'Configdir -> {self.configdir}')
-        if self.user == 'test':
-            self.input = 'dummy'
+        self.logger.debug(f"Configdir -> {self.configdir}")
+        if self.user == "test":
+            self.input = "dummy"
             return
         if pathlib.Path(self.config_file).exists():
             self.read_config()
             return
         else:
-            self.logger.debug('No config for any user found...')
-            self.input = 'dummy'
-            self.logger.error('No config found, please run ck --init')
-            sys.exit(0)
+            self.logger.debug("No config for any user found...")
+            self.input = "dummy"
+            self.setup()
 
     def execute_command(self):
 
         selected = Fzf().prompt(list(self.config.values()))[0]
-        self.logger.debug(f'Executing {selected}')
+        self.logger.debug(f"Executing {selected}")
         subprocess.Popen(["/bin/bash", "-i", "-c", selected])
         sys.exit(0)
 
@@ -181,22 +193,25 @@ class CustomHotkey:
             if editor:
                 editor = "/usr/bin/editor"
         if editor:
-            subprocess.call(f"{editor} {self.configdir}/config.yaml", shell=True)
+            subprocess.call(
+                f"{editor} {self.configdir}/config.yaml", shell=True
+            )
 
         if not editor:
             print("No editor found")
 
     def write_config(self, config):
-        yaml.dump(config, f'{self.configdir}/config.yaml',
-                          default_flow_style=False)
+        yaml.dump(
+            config, f"{self.configdir}/config.yaml", default_flow_style=False
+        )
 
     def read_config(self):
-        with open(str(self.configdir) + '/config.yaml', 'r') as stream:
+        with open(str(self.configdir) + "/config.yaml", "r") as stream:
             try:
                 self.config = yaml.safe_load(stream)
-                self.logger.debug(f'Config read: {self.config}')
-                self.input = self.config['meta']['input']
-                self.config = self.config['keys']
+                self.logger.debug(f"Config read: {self.config}")
+                self.input = self.config["meta"]["input"]
+                self.config = self.config["keys"]
             except yaml.YAMLError as e:
                 self.logger.info(e)
 
@@ -211,22 +226,26 @@ class CustomHotkey:
         try:
             self.dev = InputDevice(self.device)
             with self.dev.grab_context():
-                self.logger.debug('Entering infinite loop')
+                self.logger.debug("Entering infinite loop")
                 for event in self.dev.read_loop():
                     if event.type == ecodes.EV_KEY:
                         cat = categorize(event)
                         if cat.keystate == cat.key_down:
-                            self.logger.debug(f'Key pressed: {cat.keycode}')
+                            self.logger.debug(f"Key pressed: {cat.keycode}")
                             try:
                                 cmd = self.config[cat.keycode]
                             except KeyError:
-                                self.logger.debug(f'No cmd for {cat.keycode} found in config')
+                                self.logger.debug(
+                                    f"No cmd for {cat.keycode} found in config"
+                                )
                                 cmd = None
                                 pass
                             if cmd:
-                                self.logger.debug(f'Executing {cmd}')
+                                self.logger.debug(f"Executing {cmd}")
                                 try:
-                                    subprocess.check_output(["/bin/bash", "-i", "-c", cmd])
+                                    subprocess.check_output(
+                                        ["/bin/bash", "-i", "-c", cmd]
+                                    )
                                 except subprocess.CalledProcessError as e:
                                     self.logger.debug(e.output)
                                     self.logger.debug(e.returncode)
@@ -237,7 +256,7 @@ class CustomHotkey:
 
     def _check_root(self):
         user = os.getenv("SUDO_USER")
-        self.logger.debug(f'Sudo user: {user}')
+        self.logger.debug(f"Sudo user: {user}")
         self.root = True
         if user:
             self.root = True

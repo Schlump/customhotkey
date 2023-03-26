@@ -2,35 +2,22 @@
 import argparse
 from customkey.hotkey import CustomHotkey
 from customkey.hotkey import Fzf
-import time
 import sys
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(
-        description="Customhotkey.."
+    parser = argparse.ArgumentParser(description="Customhotkey..")
+    parser.add_argument(
+        "--debug", action="store_true", help="Turn on Debug Mode"
     )
-    parser.add_argument("--debug", action="store_true", help="Turn on Debug Mode")
 
-    subparsers = parser.add_subparsers(
-        help="",
-        dest="action",
-        title="Action"
-
-    )
-    subparser = subparsers.add_parser(
-        "init",
-        help="Run CustomKey"
-
-    )
-    subparser = subparsers.add_parser(
-        "run",
-        help="Run CustomKey"
-    )
+    subparsers = parser.add_subparsers(help="", dest="action", title="Action")
+    subparser = subparsers.add_parser("init", help="Run CustomKey")
+    subparser = subparsers.add_parser("run", help="Run CustomKey")
 
     subparser.add_argument(
         "--user",
-        help='Specify user for config file',
+        help="Specify user for config file",
         default=None,
     )
 
@@ -42,15 +29,15 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     fzf = Fzf()
-    log_lvl = 'INFO'
+    log_lvl = "INFO"
     if args.debug:
-        log_lvl = 'DEBUG'
+        log_lvl = "DEBUG"
 
-    if args.action == 'run':
-        hk = CustomHotkey(user= args.user, log_lvl=log_lvl)
+    if args.action == "run":
+        hk = CustomHotkey(user=args.user, log_lvl=log_lvl)
         hk.enter_loop()
 
-    if args.action == 'init':
+    if args.action == "init":
         hk = CustomHotkey(log_lvl=log_lvl)
         try:
             hk.setup()
@@ -58,15 +45,12 @@ if __name__ == "__main__":
             sys.exit(0)
         sys.exit(0)
 
-    if args.action == 'edit':
+    if args.action == "edit":
         hk = CustomHotkey(log_lvl=log_lvl)
         hk.edit_config()
 
     function = fzf.prompt(
-        ["execute cmd",
-         "edit config",
-         "init",
-         "run"],
+        ["execute cmd", "edit config", "init", "run"],
         "--cycle --reverse --header=Choose function to use",
     )
 

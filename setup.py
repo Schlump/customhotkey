@@ -7,7 +7,7 @@ setup(
     url="",
     author="",
     author_email="",
-    install_requires=["pyyaml"],
+    install_requires=["pyyaml", "evdev"],
     packages=["customkey"],
     scripts=[
         "bin/ck",
